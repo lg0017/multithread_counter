@@ -8,6 +8,7 @@
 #include <time.h>
 #include <pthread.h>
 
+/* Struct que salva os dados de cada thread, assim tenho controle sobre elas */
 typedef struct {
 	int dado_entrada;
 	int id_thread;
@@ -95,8 +96,10 @@ int main() {
 
 		/* Numero maximo de threads ao mesmo tempo */
 		for(k = 0; k < 4; k++){
+			/* Se a thread ja finalizou, posso criar outra */
 			if(libera[k]== 0){
 				libera[k] = 1;
+				/* Dados de cada thread */
 				infos = (thread_dados*)malloc(sizeof(thread_dados));
 				infos ->dado_entrada = entrada[j];
 				infos ->id_thread = k;
@@ -108,7 +111,7 @@ int main() {
 	}
 
 	/* Verifica se as threads acabaram */
-    for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		pthread_join(threads[i], NULL);
 	}
 	
